@@ -1,8 +1,8 @@
 Employee
 --------
 
-src/Employee/CreateEmployee.cs - Lambda function for creating employee
-src/Employee/QueryEmployees.cs - Lambda function for querying employee by day 
+src/Employee/CreateEmployee.cs - Lambda function for creating employee <br/>
+src/Employee/QueryEmployees.cs - Lambda function for querying employee by day <br/> 
 sam template - template.yaml
 
 Example - Create Employee
