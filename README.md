@@ -1,8 +1,8 @@
 Employee
 --------
 
-src/Employee/CreateEmployee.cs - Lambda function for creating employee
-src/Employee/QueryEmployees.cs - Lambda function for querying employee by day 
+src/Employee/CreateEmployee.cs - Lambda function for creating employee <br/>
+src/Employee/QueryEmployees.cs - Lambda function for querying employee by day <br/> 
 sam template - template.yaml
 
 Example - Create Employee
@@ -12,4 +12,4 @@ Example - Create Employee
 
 Example - Query Employees
 -------------------------
-`curl -XGET http://localhost:7091/query_employees?day=12`
+`curl -XGET http://<rest_api_id>.execute-api.us-east-2.amazonaws.com/Prod/query_employees?day=12`
