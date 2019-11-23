@@ -1,0 +1,36 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: 'SAM Template for employee
+
+  '
+Globals:
+  Function:
+    Timeout: 10
+Resources:
+  HelloWorldFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://employee9219/6c284a6343d8471efd7ba98dbbed7673
+      Handler: HelloWorld::HelloWorld.Function::FunctionHandler
+      Runtime: dotnetcore2.1
+      Environment:
+        Variables:
+          BucketName: test9218
+      Events:
+        HelloWorld:
+          Type: Api
+          Properties:
+            Path: /create_employee
+            Method: post
+      Role: arn:aws:iam::125570411681:role/service-role/create_employee-role-m686wlb2
+Outputs:
+  HelloWorldApi:
+    Description: API Gateway endpoint URL for Prod stage for Hello World function
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/
+  HelloWorldFunction:
+    Description: Hello World Lambda Function ARN
+    Value:
+      Fn::GetAtt:
+      - HelloWorldFunction
+      - Arn

@@ -1,0 +1,61 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  SAM Template for employee
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 120
+
+Resources:
+  CreateEmployeeFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: ./src/Employee/
+      Handler: Employee::CreateEmployee.CreateEmployee::FunctionHandler
+      Runtime: dotnetcore2.1
+      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+        Variables:
+          BucketName: employees-data
+      Events:
+        HelloWorld:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /create_employee
+            Method: post
+      Role: arn:aws:iam::125570411681:role/service-role/create_employee-role-m686wlb2
+  QueryEmployeesFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: ./src/Employee/
+      Handler: Employee::QueryEmployees.QueryEmployees::FunctionHandler
+      Runtime: dotnetcore2.1
+      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+        Variables:
+          BucketName: employees-data
+      Events:
+        QueryEmployees:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /query_employees
+            Method: post
+      Role: arn:aws:iam::125570411681:role/service-role/create_employee-role-m686wlb2
+
+
+Outputs:
+  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
+  # Find out more about other implicit resources you can reference within SAM
+  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+  CreateEmployeeApi:
+    Description: "API Gateway endpoint URL for creating employees"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/create_employee/"
+  CreateEmployeeFunction:
+    Description: "Create Employees lambda Function ARN"
+    Value: !GetAtt CreateEmployeeFunction.Arn
+  QueryEmployeesApi:
+    Description: "API Gateway endpoint URL for querying employees"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/query_employees/"
+  QueryEmployeesFunction:
+    Description: "Query Employees Lambda Function ARN"
+    Value: !GetAtt QueryEmployeesFunction.Arn
