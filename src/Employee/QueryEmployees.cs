@@ -26,8 +26,9 @@ namespace QueryEmployees
         {
 
             LambdaLogger.Log("Post Data " + apigProxyEvent.Body);
-            Dictionary<string,string> body = JsonConvert.DeserializeObject<Dictionary<string,string>>(apigProxyEvent.Body);
-            List<Dictionary<String, String>> queryResults = await queryAthena(body["day"].ToString());
+            string day;
+            apigProxyEvent.QueryStringParameters.TryGetValue("day", out day);
+            List<Dictionary<String, String>> queryResults = await queryAthena(day.ToString());
 
             return new APIGatewayProxyResponse
             {

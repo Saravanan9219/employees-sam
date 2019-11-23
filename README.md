@@ -12,4 +12,4 @@ Example - Create Employee
 
 Example - Query Employees
 -------------------------
-`curl -XPOST -d '{"day":12}' https://5u84baikr7.execute-api.us-east-2.amazonaws.com/Prod/query_employees`
+`curl -XGET http://localhost:7091/query_employees?day=12`
